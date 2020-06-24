@@ -16,7 +16,8 @@ function getOfileName {
 BAR="<ul class=navbar>"
 for content in */main.html ; do
     name=${content%/*}
-    BAR="$BAR <li class=navbar_li> <a class=navbar_li_a href=\"$(getOfileName $content)\">$name</a> </li>"
+    #BAR="$BAR <li class=navbar_li> <a class=navbar_li_a href=\"$(getOfileName $content)\">$name</a> </li>"
+    BAR=`printf "%s\n    %s" "$BAR" "<li class=navbar_li> <a class=navbar_li_a href=\"$(getOfileName $content)\">$name</a> </li>"`
 done
 BAR="${BAR}</ul>"
 
@@ -27,7 +28,6 @@ function insertIntoTemplate {
 }
 
 for content in */main.html ; do
-
     #This extra depends on the page, right now it is used to 
     #dynamically build the list of projects on the projects page
     EXTRA=""
@@ -45,10 +45,18 @@ for content in */main.html ; do
         EXTRA=`printf "%s\n%s" "$EXTRA" "</ul>"`
     fi
 
+    #set the bar to have an active tab
+    OLDBAR="$BAR"
+    CURRENTTAB="${content%/*}"
+
+    LINENUM=$(grep -n "$CURRENTTAB" <(echo "$BAR") | cut -d ':' -f 1)
+    BAR="$(awk -v linenum="$LINENUM" 'NR == linenum {gsub("li class=navbar_li", "li class=navbar_li_active")}; {print}' <(echo "$BAR"))"
+
     OFILE="$(getOfileName $content)"
     mkdir -p build
     TEXT="$(cat $content)"
     insertIntoTemplate > build/${OFILE}
+    BAR="$OLDBAR"
 done
 
 cp styles.css build/styles.css

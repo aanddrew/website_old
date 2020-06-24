@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-size: 100%;
 }
 
 body {
@@ -8,11 +9,14 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-  body {
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%; 
-  }
+    html {
+        font-size:200%;
+    }
+    body {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%; 
+    }
 }
 
 .navbar {
@@ -27,6 +31,11 @@ body {
   float: left;
 }
 
+.navbar_li_active {
+    float: left;
+    background-color: #417db0;
+}
+
 .navbar_li_a {
   display: block;
   color: white;
@@ -35,8 +44,7 @@ body {
   text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
-li a:hover {
+.navbar_li_a:hover {
   background-color: #7cb896;
 }
 
