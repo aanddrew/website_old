@@ -18,19 +18,19 @@
 <h3> How it works </h3>
 <h3> Projection </h3>
 <p>
-    The first part of how it works is extremely simple. It uses what's 
-    called a <a href=https://en.wikipedia.org/wiki/3D_projection#Weak_perspective_projection>
-    Weak Perspective Projection</a> to project points in 3d space onto
+    The first part of how it works is extremely simple. It uses <a href=https://en.wikipedia.org/wiki/3D_projection#Mathematical_formula>
+    Perspective Projection</a> to project points in 3d space onto
     the screen.
 </p>
 
 <p>
     The x, y, and z depths are calculated from a camera frame which defines
     a coordinate system relative to the camera's looking direction.
+    From here we take those relative x and y coordinates, and divide them by z. This results in vertices that are farther away showing up closer to the center screen. This happens at a linear scale, so objects that are twice as far away end up half the size. This is a true fact of vision which is truly fascinating.
 </p>
 
 <p>
-    This is a formula for projecting a single point onto a screen, so to
+    This formula allows us to project a single point onto a screen, so to
     draw polygons in 3d we simply project many of these points and fill the
     space in between. In my case, this was done with solid colors, but it
     can be done with textures as well.
